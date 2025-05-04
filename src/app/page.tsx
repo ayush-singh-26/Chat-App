@@ -165,8 +165,8 @@ export default function ChatApp() {
         if (userReactions.includes('you')) {
           const updated = userReactions.filter(id => id !== 'you')
           if (updated.length === 0) {
-            // @ts-ignore
-            const { [emoji]: _unused, ...rest } = reactions
+            const rest = { ...reactions };
+            delete rest[emoji];
             return { ...msg, reactions: Object.keys(rest).length ? rest : undefined }
           }
           return { ...msg, reactions: { ...reactions, [emoji]: updated } }
@@ -224,8 +224,8 @@ export default function ChatApp() {
                     alt={selectedUser.name}
                   />
                   <span className={`absolute bottom-0 right-0 w-2 h-2 rounded-full border border-white ${selectedUser.status === 'online' ? 'bg-green-500' :
-                      selectedUser.status === 'busy' ? 'bg-red-500' :
-                        selectedUser.status === 'away' ? 'bg-yellow-500' : 'bg-gray-400'
+                    selectedUser.status === 'busy' ? 'bg-red-500' :
+                      selectedUser.status === 'away' ? 'bg-yellow-500' : 'bg-gray-400'
                     }`}></span>
                 </div>
                 <div className="flex-1">
@@ -265,8 +265,8 @@ export default function ChatApp() {
                 alt="Your profile"
               />
               <span className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${userStatus === 'online' ? 'bg-green-500' :
-                  userStatus === 'busy' ? 'bg-red-500' :
-                    userStatus === 'away' ? 'bg-yellow-500' : 'bg-gray-400'
+                userStatus === 'busy' ? 'bg-red-500' :
+                  userStatus === 'away' ? 'bg-yellow-500' : 'bg-gray-400'
                 }`}></span>
             </div>
             <div className="text-left">
@@ -288,8 +288,8 @@ export default function ChatApp() {
                     className="flex items-center w-full p-2 hover:bg-gray-100 rounded"
                   >
                     <span className={`w-2 h-2 rounded-full mr-2 ${status === 'online' ? 'bg-green-500' :
-                        status === 'busy' ? 'bg-red-500' :
-                          status === 'away' ? 'bg-yellow-500' : 'bg-gray-400'
+                      status === 'busy' ? 'bg-red-500' :
+                        status === 'away' ? 'bg-yellow-500' : 'bg-gray-400'
                       }`}></span>
                     <span>{statusMessages[status]}</span>
                     {userStatus === status && <FiCheck className="ml-auto" />}
@@ -333,8 +333,8 @@ export default function ChatApp() {
                     alt={user.name}
                   />
                   <span className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${user.status === 'online' ? 'bg-green-500' :
-                      user.status === 'busy' ? 'bg-red-500' :
-                        user.status === 'away' ? 'bg-yellow-500' : 'bg-gray-400'
+                    user.status === 'busy' ? 'bg-red-500' :
+                      user.status === 'away' ? 'bg-yellow-500' : 'bg-gray-400'
                     }`}></span>
                 </div>
                 <div>
@@ -361,8 +361,8 @@ export default function ChatApp() {
                     alt={selectedUser.name}
                   />
                   <span className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${selectedUser.status === 'online' ? 'bg-green-500' :
-                      selectedUser.status === 'busy' ? 'bg-red-500' :
-                        selectedUser.status === 'away' ? 'bg-yellow-500' : 'bg-gray-400'
+                    selectedUser.status === 'busy' ? 'bg-red-500' :
+                      selectedUser.status === 'away' ? 'bg-yellow-500' : 'bg-gray-400'
                     }`}></span>
                 </div>
                 <div>
@@ -386,8 +386,8 @@ export default function ChatApp() {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${message.fromId === 'you'
-                            ? 'bg-blue-600 text-white rounded-br-none'
-                            : 'bg-white border border-gray-200 rounded-bl-none'
+                          ? 'bg-blue-600 text-white rounded-br-none'
+                          : 'bg-white border border-gray-200 rounded-bl-none'
                           }`}
                       >
                         <p>{message.text}</p>
@@ -406,8 +406,8 @@ export default function ChatApp() {
                                 key={emoji}
                                 onClick={() => handleReaction(message.id, emoji)}
                                 className={`text-xs px-1 rounded ${users.includes('you')
-                                    ? 'bg-blue-100 text-blue-800'
-                                    : 'bg-gray-100 text-gray-800'
+                                  ? 'bg-blue-100 text-blue-800'
+                                  : 'bg-gray-100 text-gray-800'
                                   }`}
                               >
                                 {emoji} {users.length}
@@ -496,8 +496,8 @@ export default function ChatApp() {
                   onClick={handleSendMessage}
                   disabled={!input.trim()}
                   className={`p-2 rounded-full ${input.trim()
-                      ? 'bg-blue-600 text-white hover:bg-blue-700'
-                      : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    ? 'bg-blue-600 text-white hover:bg-blue-700'
+                    : 'bg-gray-200 text-gray-400 cursor-not-allowed'
                     }`}
                 >
                   <FiSend className="w-5 h-5" />
