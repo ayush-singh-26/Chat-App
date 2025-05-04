@@ -165,6 +165,7 @@ export default function ChatApp() {
         if (userReactions.includes('you')) {
           const updated = userReactions.filter(id => id !== 'you')
           if (updated.length === 0) {
+            // @ts-ignore
             const { [emoji]: _unused, ...rest } = reactions
             return { ...msg, reactions: Object.keys(rest).length ? rest : undefined }
           }
