@@ -55,7 +55,7 @@ export default function ChatApp() {
         setShowSidebar(true)
       }
     }
-    
+
     checkIfMobile()
     window.addEventListener('resize', checkIfMobile)
     return () => window.removeEventListener('resize', checkIfMobile)
@@ -160,12 +160,12 @@ export default function ChatApp() {
       if (msg.id === messageId) {
         const reactions = msg.reactions || {}
         const userReactions = reactions[emoji] || []
-        
+
         // Toggle reaction
         if (userReactions.includes('you')) {
           const updated = userReactions.filter(id => id !== 'you')
           if (updated.length === 0) {
-            const { [emoji]: _, ...rest } = reactions
+            const { [emoji]: _unused, ...rest } = reactions
             return { ...msg, reactions: Object.keys(rest).length ? rest : undefined }
           }
           return { ...msg, reactions: { ...reactions, [emoji]: updated } }
@@ -179,7 +179,7 @@ export default function ChatApp() {
 
   const sendQuickStatus = (status: string) => {
     if (!selectedUser) return
-    
+
     const newMessage: Message = {
       id: Date.now().toString(),
       text: status,
@@ -209,7 +209,7 @@ export default function ChatApp() {
         <div className="md:hidden fixed top-0 left-0 right-0 bg-white p-3 border-b border-gray-200 flex items-center z-10">
           {selectedUser ? (
             <>
-              <button 
+              <button
                 onClick={handleBackToChatList}
                 className="p-2 mr-2 text-gray-600"
               >
@@ -217,16 +217,15 @@ export default function ChatApp() {
               </button>
               <div className="flex items-center flex-1">
                 <div className="relative mr-3">
-                  <img 
-                    src={selectedUser.avatar} 
-                    className="w-8 h-8 rounded-full" 
+                  <img
+                    src={selectedUser.avatar}
+                    className="w-8 h-8 rounded-full"
                     alt={selectedUser.name}
                   />
-                  <span className={`absolute bottom-0 right-0 w-2 h-2 rounded-full border border-white ${
-                    selectedUser.status === 'online' ? 'bg-green-500' :
-                    selectedUser.status === 'busy' ? 'bg-red-500' :
-                    selectedUser.status === 'away' ? 'bg-yellow-500' : 'bg-gray-400'
-                  }`}></span>
+                  <span className={`absolute bottom-0 right-0 w-2 h-2 rounded-full border border-white ${selectedUser.status === 'online' ? 'bg-green-500' :
+                      selectedUser.status === 'busy' ? 'bg-red-500' :
+                        selectedUser.status === 'away' ? 'bg-yellow-500' : 'bg-gray-400'
+                    }`}></span>
                 </div>
                 <div className="flex-1">
                   <h2 className="font-semibold">{selectedUser.name}</h2>
@@ -238,7 +237,7 @@ export default function ChatApp() {
             </>
           ) : (
             <>
-              <button 
+              <button
                 onClick={() => setShowSidebar(!showSidebar)}
                 className="p-2 mr-2 text-gray-600"
               >
@@ -251,24 +250,23 @@ export default function ChatApp() {
       )}
 
       <div className={`${showSidebar ? 'flex' : 'hidden'} md:flex w-full md:w-1/4 border-r border-gray-200 bg-white flex-col fixed md:relative h-full z-20`}>
-        
+
 
         <div className="p-4 border-b border-gray-200 relative">
-          <button 
+          <button
             onClick={() => setShowStatusMenu(!showStatusMenu)}
             className="flex items-center space-x-2 w-full group"
           >
             <div className="relative">
-              <img 
-                src="https://i.pravatar.cc/150?img=4" 
-                className="w-10 h-10 rounded-full" 
+              <img
+                src="https://i.pravatar.cc/150?img=4"
+                className="w-10 h-10 rounded-full"
                 alt="Your profile"
               />
-              <span className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${
-                userStatus === 'online' ? 'bg-green-500' :
-                userStatus === 'busy' ? 'bg-red-500' :
-                userStatus === 'away' ? 'bg-yellow-500' : 'bg-gray-400'
-              }`}></span>
+              <span className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${userStatus === 'online' ? 'bg-green-500' :
+                  userStatus === 'busy' ? 'bg-red-500' :
+                    userStatus === 'away' ? 'bg-yellow-500' : 'bg-gray-400'
+                }`}></span>
             </div>
             <div className="text-left">
               <p className="font-medium">You</p>
@@ -288,17 +286,16 @@ export default function ChatApp() {
                     onClick={() => updateStatus(status)}
                     className="flex items-center w-full p-2 hover:bg-gray-100 rounded"
                   >
-                    <span className={`w-2 h-2 rounded-full mr-2 ${
-                      status === 'online' ? 'bg-green-500' :
-                      status === 'busy' ? 'bg-red-500' :
-                      status === 'away' ? 'bg-yellow-500' : 'bg-gray-400'
-                    }`}></span>
+                    <span className={`w-2 h-2 rounded-full mr-2 ${status === 'online' ? 'bg-green-500' :
+                        status === 'busy' ? 'bg-red-500' :
+                          status === 'away' ? 'bg-yellow-500' : 'bg-gray-400'
+                      }`}></span>
                     <span>{statusMessages[status]}</span>
                     {userStatus === status && <FiCheck className="ml-auto" />}
                   </button>
                 ))}
               </div>
-              
+
               <div className="p-2 border-t border-gray-100">
                 <h4 className="text-xs font-semibold text-gray-500 mb-1">QUICK STATUS</h4>
                 {quickStatuses.map(status => (
@@ -322,24 +319,22 @@ export default function ChatApp() {
           <h2 className="font-semibold mb-4">Online Users</h2>
           <ul className="space-y-3">
             {users.map(user => (
-              <li 
+              <li
                 key={user.id}
                 onClick={() => setSelectedUser(user)}
-                className={`flex items-center p-2 rounded-lg cursor-pointer transition-colors ${
-                  selectedUser?.id === user.id ? 'bg-blue-100' : 'hover:bg-gray-100'
-                }`}
+                className={`flex items-center p-2 rounded-lg cursor-pointer transition-colors ${selectedUser?.id === user.id ? 'bg-blue-100' : 'hover:bg-gray-100'
+                  }`}
               >
                 <div className="relative mr-3">
-                  <img 
-                    src={user.avatar} 
-                    className="w-10 h-10 rounded-full" 
+                  <img
+                    src={user.avatar}
+                    className="w-10 h-10 rounded-full"
                     alt={user.name}
                   />
-                  <span className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${
-                    user.status === 'online' ? 'bg-green-500' :
-                    user.status === 'busy' ? 'bg-red-500' :
-                    user.status === 'away' ? 'bg-yellow-500' : 'bg-gray-400'
-                  }`}></span>
+                  <span className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${user.status === 'online' ? 'bg-green-500' :
+                      user.status === 'busy' ? 'bg-red-500' :
+                        user.status === 'away' ? 'bg-yellow-500' : 'bg-gray-400'
+                    }`}></span>
                 </div>
                 <div>
                   <p className="font-medium">{user.name}</p>
@@ -359,16 +354,15 @@ export default function ChatApp() {
             {!isMobile && (
               <div className="p-4 border-b border-gray-200 bg-white flex items-center">
                 <div className="relative mr-3">
-                  <img 
-                    src={selectedUser.avatar} 
-                    className="w-10 h-10 rounded-full" 
+                  <img
+                    src={selectedUser.avatar}
+                    className="w-10 h-10 rounded-full"
                     alt={selectedUser.name}
                   />
-                  <span className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${
-                    selectedUser.status === 'online' ? 'bg-green-500' :
-                    selectedUser.status === 'busy' ? 'bg-red-500' :
-                    selectedUser.status === 'away' ? 'bg-yellow-500' : 'bg-gray-400'
-                  }`}></span>
+                  <span className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${selectedUser.status === 'online' ? 'bg-green-500' :
+                      selectedUser.status === 'busy' ? 'bg-red-500' :
+                        selectedUser.status === 'away' ? 'bg-yellow-500' : 'bg-gray-400'
+                    }`}></span>
                 </div>
                 <div>
                   <h2 className="font-semibold">{selectedUser.name}</h2>
@@ -382,24 +376,22 @@ export default function ChatApp() {
             <div className="flex-1 overflow-y-auto p-4 bg-gray-50">
               <div className="space-y-3">
                 {messages.map(message => (
-                  <div 
-                    key={message.id} 
+                  <div
+                    key={message.id}
                     className={`flex ${message.fromId === 'you' ? 'justify-end' : 'justify-start'}`}
                   >
                     <div className="group relative">
                       <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                          message.fromId === 'you' 
-                            ? 'bg-blue-600 text-white rounded-br-none' 
+                        className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${message.fromId === 'you'
+                            ? 'bg-blue-600 text-white rounded-br-none'
                             : 'bg-white border border-gray-200 rounded-bl-none'
-                        }`}
+                          }`}
                       >
                         <p>{message.text}</p>
-                        <div className={`flex items-center justify-between mt-1 text-xs ${
-                          message.fromId === 'you' ? 'text-blue-200' : 'text-gray-500'
-                        }`}>
+                        <div className={`flex items-center justify-between mt-1 text-xs ${message.fromId === 'you' ? 'text-blue-200' : 'text-gray-500'
+                          }`}>
                           <span>{message.time}</span>
                           {message.fromId === 'you' && (
                             <span>{message.isRead ? '✓✓' : '✓'}</span>
@@ -412,11 +404,10 @@ export default function ChatApp() {
                               <button
                                 key={emoji}
                                 onClick={() => handleReaction(message.id, emoji)}
-                                className={`text-xs px-1 rounded ${
-                                  users.includes('you') 
-                                    ? 'bg-blue-100 text-blue-800' 
+                                className={`text-xs px-1 rounded ${users.includes('you')
+                                    ? 'bg-blue-100 text-blue-800'
                                     : 'bg-gray-100 text-gray-800'
-                                }`}
+                                  }`}
                               >
                                 {emoji} {users.length}
                               </button>
@@ -503,11 +494,10 @@ export default function ChatApp() {
                 <button
                   onClick={handleSendMessage}
                   disabled={!input.trim()}
-                  className={`p-2 rounded-full ${
-                    input.trim() 
-                      ? 'bg-blue-600 text-white hover:bg-blue-700' 
+                  className={`p-2 rounded-full ${input.trim()
+                      ? 'bg-blue-600 text-white hover:bg-blue-700'
                       : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                  }`}
+                    }`}
                 >
                   <FiSend className="w-5 h-5" />
                 </button>
@@ -525,8 +515,8 @@ export default function ChatApp() {
               <h3 className="text-xl font-medium text-gray-700 mb-2">No chat selected</h3>
               <p className="text-gray-500 mb-6">Choose a conversation from the sidebar to start chatting</p>
               {users.length > 0 && (
-                <button 
-                  onClick={() => setSelectedUser(users[0])} 
+                <button
+                  onClick={() => setSelectedUser(users[0])}
                   className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
                 >
                   Start with {users[0].name}
